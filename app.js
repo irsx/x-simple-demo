@@ -2,12 +2,23 @@ const express = require('express')
 const app = express()
 app.use(express.json())
 const product = require('./produk')
+const productdata = require('./produkdata')
+const productdatainject = require('./produkdatainject')
 require('dotenv').config()
 //var https = require('https')
 //let fs = require('fs')
 
 app.get('/xsimple/products', async (req, res) => {
-  res.json(product)
+  console.log(req.query);
+  if(req.query.tipe == 'data'){
+    res.json(productdata)
+  }else{
+      if(req.query.tipe == 'inject'){
+         res.json(productdatainject)
+      }else{
+        res.json(product)
+      }
+  }
 })
 
 app.listen(process.env.PORT, () => {
